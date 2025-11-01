@@ -1583,22 +1583,23 @@ ul {
 
 .video-modal-content {
     position: relative;
-    width: 95%;
-    max-width: 1400px;
+    width: 70%;
+    max-width: 800px;
     aspect-ratio: 16 / 9;
     background: var(--dark);
     border-radius: var(--radius-lg);
     padding: 0;
     box-shadow: var(--shadow-xl);
     overflow: hidden;
+    margin: 40px auto;
 }
 
 .video-modal-close {
     position: absolute;
-    top: -15px;
-    right: -15px;
-    width: 40px;
-    height: 40px;
+    top: 10px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
     background: linear-gradient(135deg, #dc2626, #ef4444);
     color: white;
     font-size: 2rem;
@@ -1612,6 +1613,7 @@ ul {
     z-index: 10000;
     line-height: 1;
     padding-bottom: 5px;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.5);
 }
 
 .video-modal-close:hover {
@@ -1633,6 +1635,30 @@ ul {
     }
     to {
         opacity: 1;
+    }
+}
+
+/* ===== RESPONSIVE VIDEO MODAL ===== */
+@media (max-width: 768px) {
+    .video-modal-content {
+        width: 95%;
+        max-width: 100%;
+        margin: 10px auto;
+    }
+    
+    .video-modal-close {
+        top: 5px;
+        right: 5px;
+        width: 35px;
+        height: 35px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-modal-content {
+        width: 98%;
+        margin: 5px auto;
     }
 }
 
@@ -2285,4 +2311,28 @@ ul {
 .slide-in-right.visible {
     opacity: 1;
     transform: translateX(0);
+}
+
+/* ===== RESPONSIVE VIDEO MODAL ===== */
+@media (max-width: 768px) {
+    .video-modal-content {
+        width: 95%;
+        max-width: 100%;
+        margin: 10px auto;
+    }
+    
+    .video-modal-close {
+        top: 5px;
+        right: 5px;
+        width: 35px;
+        height: 35px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-modal-content {
+        width: 98%;
+        margin: 5px auto;
+    }
 }
