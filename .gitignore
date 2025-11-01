@@ -12,3 +12,10 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Git LFS
+.git/lfs/
+
+# Note: Les vidéos sont gérées par Git LFS
+# Si Git LFS ne fonctionne pas, décommentez la ligne suivante:
+# videos/*.mp4
