@@ -742,24 +742,19 @@ const optimizedScrollHandler = throttle(() => {
 // ===== VIDEO MODAL =====
 function openVideoModal(videoId) {
     const modal = document.getElementById('video-modal');
-    const video = document.getElementById(videoId);
+    const iframe = document.getElementById(videoId);
     
-    if (modal && video) {
-        // Cacher toutes les vidéos d'abord
-        const allVideos = modal.querySelectorAll('video');
-        allVideos.forEach(v => {
+    if (modal && iframe) {
+        // Cacher toutes les iframes d'abord
+        const allIframes = modal.querySelectorAll('iframe');
+        allIframes.forEach(v => {
             v.style.display = 'none';
-            v.pause();
-            v.currentTime = 0;
         });
         
-        // Afficher uniquement la vidéo demandée
-        video.style.display = 'block';
+        // Afficher uniquement l'iframe demandée
+        iframe.style.display = 'block';
         modal.classList.add('active');
         document.body.style.overflow = 'hidden'; // Empêcher le scroll
-        
-        // Ne pas autoplay - l'utilisateur doit cliquer sur play
-        // Cela évite les erreurs d'autoplay bloquées par le navigateur
     }
 }
 
@@ -767,14 +762,14 @@ function closeVideoModal() {
     const modal = document.getElementById('video-modal');
     
     if (modal) {
-        // Pause toutes les vidéos
-        const allVideos = modal.querySelectorAll('video');
-        allVideos.forEach(video => {
-            if (!video.paused) {
-                video.pause();
-            }
-            video.currentTime = 0; // Réinitialiser la vidéo
-            video.style.display = 'none'; // Cacher la vidéo
+        // Arrêter toutes les vidéos YouTube en réinitialisant les iframes
+        const allIframes = modal.querySelectorAll('iframe');
+        allIframes.forEach(iframe => {
+            // Arrêter la vidéo YouTube en rechargeant l'iframe
+            const src = iframe.src;
+            iframe.src = '';
+            iframe.src = src;
+            iframe.style.display = 'none'; // Cacher l'iframe
         });
         
         // Ensuite ferme le modal
