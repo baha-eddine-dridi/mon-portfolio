@@ -758,13 +758,8 @@ function openVideoModal(videoId) {
         modal.classList.add('active');
         document.body.style.overflow = 'hidden'; // Empêcher le scroll
         
-        // Attendre que le modal soit visible avant de lancer la vidéo
-        setTimeout(() => {
-            video.play().catch(error => {
-                console.log('Autoplay prevented:', error);
-                // L'utilisateur devra cliquer sur play manuellement
-            });
-        }, 100);
+        // Ne pas autoplay - l'utilisateur doit cliquer sur play
+        // Cela évite les erreurs d'autoplay bloquées par le navigateur
     }
 }
 
