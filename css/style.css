@@ -1583,12 +1583,14 @@ ul {
 
 .video-modal-content {
     position: relative;
-    width: 90%;
-    max-width: 1200px;
+    width: 95%;
+    max-width: 1400px;
+    aspect-ratio: 16 / 9;
     background: var(--dark);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
+    padding: 0;
     box-shadow: var(--shadow-xl);
+    overflow: hidden;
 }
 
 .video-modal-close {
@@ -1617,11 +1619,11 @@ ul {
     transform: rotate(90deg) scale(1.1);
 }
 
-.video-modal-content video {
+.video-modal-content iframe {
     width: 100%;
-    height: auto;
-    border-radius: var(--radius-md);
-    outline: none;
+    height: 100%;
+    border: none;
+    border-radius: var(--radius-lg);
     display: none; /* Cacher par défaut, JS gérera l'affichage */
 }
 
@@ -1979,6 +1981,11 @@ ul {
 
 .social-link-enhanced.github {
     background: linear-gradient(135deg, #333, #24292e);
+    color: white;
+}
+
+.social-link-enhanced.youtube {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
     color: white;
 }
 
