@@ -19,3 +19,8 @@ npm-debug.log*
 # Note: Les vidéos sont gérées par Git LFS
 # Si Git LFS ne fonctionne pas, décommentez la ligne suivante:
 # videos/*.mp4
+
+# Vid�os volumineuses (> 100 MB)
+videos/DjangoLinkedin.mp4
+videos/unimindcare.mp4
+videos/ML.mp4
