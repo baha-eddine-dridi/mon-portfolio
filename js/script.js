@@ -308,10 +308,11 @@ document.addEventListener('DOMContentLoaded', () => {
         element.classList.add('fade-in');
         observer.observe(element);
         
-        // Délai progressif pour les cartes de projets
-        if (element.classList.contains('project-card')) {
-            element.style.transitionDelay = `${index * 0.1}s`;
-        }
+        // Pas de délai pour les cartes de projets - affichage immédiat
+        // Commenté pour affichage instantané lors du scroll
+        // if (element.classList.contains('project-card')) {
+        //     element.style.transitionDelay = `${index * 0.1}s`;
+        // }
     });
 });
 
@@ -424,22 +425,25 @@ function initSkillAnimations() {
 // ===== FORMULAIRE DE CONTACT =====
 const contactForm = document.getElementById('contact-form');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Récupérer les données du formulaire
-    const formData = new FormData(contactForm);
-    const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject'),
-        message: formData.get('message')
-    };
-    
-    // Simulation d'envoi (remplacer par votre logique d'envoi)
-    showNotification('Message envoyé avec succès !', 'success');
-    contactForm.reset();
-});
+// Vérifier si le formulaire existe avant d'ajouter l'événement
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Récupérer les données du formulaire
+        const formData = new FormData(contactForm);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            subject: formData.get('subject'),
+            message: formData.get('message')
+        };
+        
+        // Simulation d'envoi (remplacer par votre logique d'envoi)
+        showNotification('Message envoyé avec succès !', 'success');
+        contactForm.reset();
+    });
+}
 
 // ===== NOTIFICATIONS =====
 function showNotification(message, type = 'info') {
@@ -749,9 +753,19 @@ function openVideoModal(videoId) {
         const allIframes = modal.querySelectorAll('iframe');
         allIframes.forEach(v => {
             v.style.display = 'none';
+            // Arrêter les vidéos en cours
+            const currentSrc = v.getAttribute('src');
+            if (currentSrc) {
+                v.setAttribute('src', '');
+            }
         });
         
-        // Afficher uniquement l'iframe demandée
+        // Charger et afficher uniquement l'iframe demandée
+        const videoSrc = iframe.getAttribute('data-src');
+        if (videoSrc) {
+            // Toujours recharger la vidéo depuis data-src
+            iframe.setAttribute('src', videoSrc);
+        }
         iframe.style.display = 'block';
         modal.classList.add('active');
         document.body.style.overflow = 'hidden'; // Empêcher le scroll
@@ -762,21 +776,17 @@ function closeVideoModal() {
     const modal = document.getElementById('video-modal');
     
     if (modal) {
-        // Arrêter toutes les vidéos YouTube en réinitialisant les iframes
+        // Arrêter toutes les vidéos YouTube en vidant les iframes
         const allIframes = modal.querySelectorAll('iframe');
         allIframes.forEach(iframe => {
-            // Arrêter la vidéo YouTube en rechargeant l'iframe
-            const src = iframe.src;
-            iframe.src = '';
-            iframe.src = src;
+            // Arrêter complètement la vidéo YouTube
+            iframe.setAttribute('src', '');
             iframe.style.display = 'none'; // Cacher l'iframe
         });
         
-        // Ensuite ferme le modal
-        setTimeout(() => {
-            modal.classList.remove('active');
-            document.body.style.overflow = ''; // Réactiver le scroll
-        }, 50);
+        // Fermer le modal
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Réactiver le scroll
     }
 }
 
