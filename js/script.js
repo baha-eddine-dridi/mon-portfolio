@@ -804,3 +804,63 @@ document.addEventListener('keydown', function(event) {
         closeVideoModal();
     }
 });
+
+// ===== PREMIUM INTERACTIONS =====
+function initPremiumInteractions() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reduceMotion) {
+        const cursorGlow = document.createElement('div');
+        cursorGlow.className = 'cursor-glow';
+        document.body.appendChild(cursorGlow);
+
+        window.addEventListener('pointermove', (event) => {
+            cursorGlow.style.opacity = '1';
+            cursorGlow.style.transform = `translate3d(${event.clientX - 210}px, ${event.clientY - 210}px, 0)`;
+        });
+
+        document.addEventListener('pointerleave', () => {
+            cursorGlow.style.opacity = '0';
+        });
+    }
+
+    const tiltCards = document.querySelectorAll('.project-card, .experience-card, .certification-card, .skill-item, .contact-card, .timeline-content-item');
+    tiltCards.forEach((card) => {
+        card.addEventListener('pointermove', (event) => {
+            if (reduceMotion || window.innerWidth < 769) return;
+
+            const rect = card.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+            const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+
+            card.style.transform = `perspective(900px) rotateX(${(-y * 4).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg) translateY(-6px)`;
+        });
+
+        card.addEventListener('pointerleave', () => {
+            card.style.transform = '';
+        });
+    });
+
+    const revealItems = document.querySelectorAll('.section-header, .about-content, .skills-slider-container, .certification-card, .project-card, .experience-card, .timeline-item, .contact-card, .contact-hero, .contact-social-section');
+    revealItems.forEach((item, index) => {
+        item.classList.add('reveal-ready');
+        item.style.transitionDelay = `${Math.min(index % 6, 5) * 55}ms`;
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-in');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    revealItems.forEach((item) => revealObserver.observe(item));
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPremiumInteractions);
+} else {
+    initPremiumInteractions();
+}
