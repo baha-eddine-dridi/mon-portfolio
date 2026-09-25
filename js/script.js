@@ -128,9 +128,9 @@ window.currentImage = function(dot, index) {
 
 // ===== EFFET DE TYPING =====
 const typingTexts = [
-    "Développeur Web",
-    "Software Engineering Student", 
-    "Full Stack Developer"
+    "Ingénieur Informatique",
+    "Développeur Full Stack",
+    "Architecte Logiciel"
 ];
 
 let textIndex = 0;
